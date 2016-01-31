@@ -40,12 +40,11 @@ public class TomatoMarketController {
 				for (int i = 0; i < sizeInt; i++) {
 
 					try {
-						Date dateBeginningOfTheYear = dateFormat.parse("01/01/2016");
-						Date dateToday = new Date();
-						long timestampInterval = dateToday.getTime() - dateBeginningOfTheYear.getTime();
+						long timestampBeginningOfTheYear = dateFormat.parse("01/01/2016").getTime();
+						long timestampToday = new Date().getTime();
 
 						tomatoMarket = new TomatoMarket(counter.incrementAndGet(), numberOfTomatoesGenerator(),
-								getRandomList(providers), timestampGenerator(timestampInterval));
+								getRandomList(providers), timestampGenerator(timestampBeginningOfTheYear, timestampToday));
 
 						listTomatoMarkets.add(tomatoMarket);
 
@@ -95,8 +94,8 @@ public class TomatoMarketController {
 		return generatedLong;
 	}
 
-	private long timestampGenerator(long interval) {
-		long generatedLong = new RandomDataGenerator().nextLong(0, interval);
+	private long timestampGenerator(long timestampBeginningOfYear, long timestampToday) {
+		long generatedLong = new RandomDataGenerator().nextLong(timestampBeginningOfYear, timestampToday);
 		return generatedLong;
 	}
 
